@@ -4,21 +4,27 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    private const int IndexMainMenuScene = 0;
-    private const int IndexLevelOneScene = 1;
-    
     [SerializeField] private Image _menu;
+    [SerializeField] private Image _settingsMenu;
     [SerializeField] private Image _pauseMenu;
 
-    private bool _isGamePaused;
+    private bool _isGamePaused = true;
 
+    private void Start()
+    {
+        Time.timeScale = 0f;
+        // _menu.gameObject.SetActive(true);
+    }
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
             if (_isGamePaused)
                 ResumeGame();
             else
                 PauseGame();
+        }
     }
     
     public void ExitButton()
@@ -27,38 +33,48 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Quit");
     }
 
-    public void StartButtonLevelOne()
+    public void StartButton()
     {
-        SceneManager.LoadScene(IndexLevelOneScene);
+        Time.timeScale = 1f;
+        _isGamePaused = false;
+        _menu.gameObject.SetActive(false);
     }
 
     public void SettingsButton()
     {
-        _menu.gameObject.SetActive(true);
+        _settingsMenu.gameObject.SetActive(true);
     }
 
     public void ReturnButton()
     {
-        _menu.gameObject.SetActive(false);
+        _settingsMenu.gameObject.SetActive(false);
     }
 
     public void PauseGame()
     {
-        _pauseMenu.gameObject.SetActive(true);    // Включаем меню паузы
-        Time.timeScale = 0f;          // Ставим игру на паузу
+        _pauseMenu.gameObject.SetActive(true);
+        Time.timeScale = 0f;
         _isGamePaused = true;
     }
 
     public void ResumeGame()
     {
-        _pauseMenu.gameObject.SetActive(false);  // Отключаем меню паузы
-        Time.timeScale = 1f;          // Возобновляем игру
+        _pauseMenu.gameObject.SetActive(false);
+        Time.timeScale = 1f;
         _isGamePaused = false;
+    }
+
+    public void PauseMenuReturn()
+    {
+        Time.timeScale = 0f;
+        _menu.gameObject.SetActive(true);
+        _settingsMenu.gameObject.SetActive(false);
+        _pauseMenu.gameObject.SetActive(false);
     }
 
     public void QuitToMainMenu()
     {
-        Time.timeScale = 1f;          // Сбрасываем время перед выходом
-        SceneManager.LoadScene(IndexMainMenuScene);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
     }
 }

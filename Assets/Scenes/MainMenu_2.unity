@@ -294,7 +294,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Scene 2
+  m_Text: Nothing happens
 --- !u!222 &370107090
 CanvasRenderer:
   m_ObjectHideFlags: 0
